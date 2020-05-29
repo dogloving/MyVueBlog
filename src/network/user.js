@@ -31,3 +31,10 @@ export function getTagArticleList(info) {
     data: info
   })
 }
+// 获取所有project
+export function getAllProject() {
+  return request({
+    url: '/getallproject',
+    method: 'get'
+  })
+}

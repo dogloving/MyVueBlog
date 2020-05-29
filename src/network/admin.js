@@ -33,3 +33,27 @@ export function deleteArticle(info) {
     data: info
   })
 }
+// 添加(修改)Project
+export function setProject(info) {
+  return request({
+    url: '/setproject',
+    method: 'post',
+    data: info
+  })
+}
+// 根据pID获取Project信息
+export function getProjectInfo(info) {
+  return request({
+    url: '/getprojectinfo',
+    method: 'post',
+    data: info
+  })
+}
+// 根据pID删除Project
+export function deleteProject(info) {
+  return request({
+    url: '/deleteproject',
+    method: 'post',
+    data: info
+  })
+}

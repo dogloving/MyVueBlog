@@ -1,10 +1,13 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Login from "views/Login"
-import AddNewArticle from "views/admin/AddNewArticle"
-import Home from "views/Home.vue"
-import EditArticle from "views/admin/EditArticle"
+const Login = () => import("views/admin/Login")
+const AddNewArticle = () => import("views/admin/AddNewArticle")
+const Home = () => import("views/common/Home")
+const EditArticle = () => import("views/admin/EditArticle")
+const EditProject = () => import("views/admin/EditProject")
+const Projects = () => import("views/common/Projects")
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -22,12 +25,21 @@ const routes = [
     props: true
   },
   {
+    path: '/editproject/:pid?',
+    component: EditProject,
+    props: true
+  },
+  {
     path: '/login',
     component: Login
   },
   {
     path: '/addnewarticle',
     component: AddNewArticle
+  },
+  {
+    path: '/project',
+    component: Projects
   }
 ]
 
