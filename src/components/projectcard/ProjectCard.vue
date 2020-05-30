@@ -1,6 +1,6 @@
 <template>
-    <Card class="card" style="width:80%;margin-top:50px" @click.native="visit">
-        <div class="header">
+    <Card class="card" style="width:80%;margin-top:50px">
+        <div class="header" @click="visit">
             <h1>{{title}}</h1>
             <div class="edit" v-if="login" @click.stop="go2Edit"><span>编辑</span></div>
         </div>
@@ -57,7 +57,7 @@
   .card {
       margin: auto;
   }
-  .card:hover {
+  .header:hover {
       cursor: pointer;
   }
   .edit {
