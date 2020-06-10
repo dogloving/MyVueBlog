@@ -2,7 +2,7 @@
 
 在线demo: http://112.74.33.44/ 
 
-管理员登录账号密码： admin  admin
+<del>管理员登录账号密码： admin  admin</del>
 
 前端：*Vue+Vue-Router+iViewUI*
 
@@ -21,8 +21,16 @@
 
 ### 2020/05/29
 添加项目栏；懒加载
-### 20202/05/30
+### 2020/05/30
 添加侧边栏收展
+
+###2020/06/10
+
+解决侧边栏显示问题。
+
+由于wangEditor不支持markdown语法及代码高亮，已换成mavon-editor，配合marked+highlight将markdown文本转成html代码并支持高亮。
+
+
 
 
 

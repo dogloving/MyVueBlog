@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
-        style="height:100vh;overflow:auto;left:0;">
+        style="min-height:100vh;overflow:auto;left:0;">
         <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
           <MenuItem name="collapse" @click.native="collapsedSider">
             <Icon :class="rotateIcon" type="md-menu" size="24"></Icon>

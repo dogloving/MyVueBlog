@@ -8,7 +8,7 @@
               <span v-if="login" class="edit" @click="go2Edit">编辑</span>
               {{last_modify_time}}
           </h4>
-          <div v-html="content" :class="[collapse?'collapse-content':'','always-content']"></div>
+          <div v-html="compiledMarkdown" v-highlight :class="[collapse?'collapse-content':'','always-content']"></div>
           <div :class="collapse?'collapse':''"></div>
           <div v-show="!collapse" class="fold" @click.stop="fold">收起</div>
       </div>
@@ -16,7 +16,13 @@
 </template>
 <script>
   import {getArticleInfo} from "network/user"
+  import marked from 'marked'
   export default {
+    computed: {
+      compiledMarkdown () {
+        return marked(this.content, { sanitize: true })
+      }
+    },
     data() {
       return {
         title: '',

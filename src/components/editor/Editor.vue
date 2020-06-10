@@ -1,8 +1,7 @@
 <template>
     <div class="editor">
         <Input v-model="title" placeholder="输入标题" style="margin-bottom:20px;" size="large" />
-        <div ref="toolbar" class="toolbar"></div>
-        <div ref="editor" class="text"></div>
+        <mavon-editor v-model="value" class="text"></mavon-editor>
         <div class="bottom-pane">
             <div class="tags">
                 <Tag v-for="(tag,idx) in allTags" :key="idx" :name="tag" checkable :checked="selectedTags.indexOf(tag)===-1?false:true"
@@ -29,7 +28,6 @@
 
 <script>
     // 参考 https://my.oschina.net/u/3992201/blog/2240237
-  import E from 'wangeditor'
   import {setArticle, deleteArticle} from "network/admin"
   import {getAllTag, getArticleInfo} from "network/user"
   import {format} from "../../util"
@@ -38,8 +36,7 @@
     name: 'Editor',
     data () {
       return {
-        editor: null,
-        info_: null,
+        value: '',// 文章内容
         title: '', // 文章标题
         publish_time: '', // 文章发布时间
         last_modify_time: '', // 最后修改时间
@@ -51,40 +48,13 @@
         deleteConfirm: false, // 是否显示删除框
       }
     },
-    model: {
-      prop: 'value',
-      event: 'change'
-    },
     props: {
-      value: {
-        type: String,
-        default: ''
-      },
-      isClear: {
-        type: Boolean,
-        default: false
-      },
       aid: {
         type: String,
         default: ''
       }
     },
-    watch: {
-      isClear (val) {
-        // 触发清除文本域内容
-        if (val) {
-          this.editor.txt.clear()
-          this.info_ = null
-        }
-      },
-      value (val) {
-        // 使用 v-model 时，设置初始值
-        this.editor.txt.html(val)
-      }
-    },
     mounted () {
-      // 初始化wangEditor
-      this.seteditor()
       // 获取所有tag
       getAllTag().then(res=> {
         for (let tag of res) this.allTags.push(tag.tag_name)
@@ -93,61 +63,16 @@
       getArticleInfo({aid: this.aid}).then(res=> {
         const data = res.data
         if (data.length > 0) {
-          console.log(res.data)
           this.title = data[0].article_title
           this.publish_time = data[0].publish_time
           this.last_modify_time = data[0].last_modify_time
           this.visible = data[0].type
           for (let item of data) this.selectedTags.push(item.tag_name)
-          this.$emit('getContent', data[0].article_content)
+          this.value = data[0].article_content
         }
       })
     },
     methods: {
-      seteditor () {
-        this.editor = new E(this.$refs.toolbar, this.$refs.editor)
-
-        this.editor.customConfig.uploadImgShowBase64 = true // base 64 存储图片
-        this.editor.customConfig.uploadImgServer = ''// 配置服务器端地址
-        this.editor.customConfig.uploadImgHeaders = {      }// 自定义 header
-        this.editor.customConfig.uploadFileName = '' // 后端接受上传文件的参数名
-        this.editor.customConfig.uploadImgMaxSize = 2 * 1024 * 1024 // 将图片大小限制为 2M
-        this.editor.customConfig.uploadImgMaxLength = 6 // 限制一次最多上传 3 张图片
-        this.editor.customConfig.uploadImgTimeout = 3 * 60 * 1000 // 设置超时时间
-
-        // 配置菜单
-        this.editor.customConfig.menus = [
-          'head', // 标题
-          'bold', // 粗体
-          'fontSize', // 字号
-          'fontName', // 字体
-          'italic', // 斜体
-          'underline', // 下划线
-          'strikeThrough', // 删除线
-          'foreColor', // 文字颜色
-          'backColor', // 背景颜色
-          'link', // 插入链接
-          'list', // 列表
-          'justify', // 对齐方式
-          'quote', // 引用
-          'emoticon', // 表情
-          'image', // 插入图片
-          'table', // 表格
-          'video', // 插入视频
-          'code', // 插入代码
-          'undo', // 撤销
-          'redo' // 重复
-        ]
-
-
-        this.editor.customConfig.onchange = (html) => {
-          this.info_ = html // 绑定当前逐渐地值
-          this.$emit('change', this.info_) // 将内容同步到父组件中
-        }
-
-        // 创建富文本编辑器
-        this.editor.create()
-      },
       toggleTag (tag) {
         // 如果没有选择tag，选他；选了，取消选中
         const idx = this.selectedTags.indexOf(tag)
@@ -189,8 +114,8 @@
       publish () {
         // 发布文章
         this.title = this.title.trim()
-        this.$parent.editor.info = this.$parent.editor.info.trim()
-        if (this.title === '' || this.$parent.editor.info === '') {
+        this.value = this.value.trim()
+        if (this.title === '' || this.value === '') {
           this.$Message.warning('标题或内容不能为空')
           return
         }
@@ -201,7 +126,7 @@
         setArticle({
           aid: this.aid,
           title: this.title,
-          content: this.$parent.editor.info,
+          content: this.value,
           last_modify_time: time,
           tags: this.selectedTags,
           visible: this.visible

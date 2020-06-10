@@ -1,6 +1,7 @@
 <template>
     <div>
-        <project-card v-for="(item,idx) in projects" :pid="item.project_id" :login="login" :key="idx" :title="item.title" :description="item.description" :site="item.site"></project-card>
+        <project-card v-for="(item,idx) in projects" :pid="item.project_id" :login="login" :key="idx" :title="item.title"
+                      :description="item.description" :site="item.site"></project-card>
     </div>
 </template>
 

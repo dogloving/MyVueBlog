@@ -1,35 +1,21 @@
 <template>
     <div>
-        <editor v-model="editor.info" :isClear="isClear" :aid="aid" @getContent="getContent"></editor>
+<!--        <editor v-model="editor.info" :isClear="isClear" :aid="aid" @getContent="getContent"></editor>-->
+        <editor :aid="aid"></editor>
     </div>
 </template>
 
 <script>
   import {checkLogin} from "network/admin"
-  import Editor from "components/editor/Editor"
+  import Editor from "components/editor/Editor";
 
   export default {
     name: "Admin",
-    components: {
-      Editor
-    },
+    components: {Editor},
     props: {
       aid: {
         type: String,
         default: ''
-      }
-    },
-    data () {
-      return {
-        editor: {
-          info: ''
-        },
-        isClear: true
-      }
-    },
-    methods: {
-      getContent (content) {
-        this.editor.info = content
       }
     },
     created () {
