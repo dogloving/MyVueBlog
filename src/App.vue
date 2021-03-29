@@ -2,7 +2,7 @@
   <div class="layout">
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
-        style="min-height:100vh;overflow:auto;left:0;">
+        class="nav">
         <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
           <MenuItem name="collapse" @click.native="collapsedSider">
             <Icon :class="rotateIcon" type="md-menu" size="24"></Icon>
@@ -91,6 +91,7 @@
   }
 </script>
 <style scoped>
+  @import url(./assets/css/base.css);
   .layout{
     border: 1px solid #d7dde4;
     background: #f5f7f9;
@@ -103,6 +104,10 @@
     background: #5b6270;
     border-radius: 3px;
     margin: 15px auto;
+  }
+  .nav {
+    min-height: 100vh;
+    position: sticky;
   }
   .menu-icon{
     transition: all .3s;

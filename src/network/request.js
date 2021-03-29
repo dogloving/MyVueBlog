@@ -3,6 +3,7 @@ axios.defaults.withCredentials = true
 
 export function request(config) {
   const instance = axios.create({
+    // baseURL: 'http://112.74.33.44:3000/api',
     baseURL: 'http://localhost:3000/api',
     timeout: 5000
   })

@@ -9,7 +9,7 @@
 </template>
 
 <script>
-  import {getProjectInfo, setProject, deleteProject} from "network/admin"
+  import {getProjectInfo, setProject, deleteProject,checkLogin} from "network/admin"
 
   export default {
     name: "EditProject",
@@ -40,11 +40,22 @@
       }
     },
     mounted () {
-      this.pid = this.$route.params.pid || ''
-      getProjectInfo({pid: this.pid}).then(res=> {
-        this.title = res.data[0].title
-        this.description = res.data[0].description
-        this.site = res.data[0].site
+      // 检查是否已登录，未登录则跳转到login页面
+      checkLogin().then(res=> {
+        if (res.code === -2) {
+          this.$Message.error(res.msg)
+          this.$router.replace('/login')
+        }
+        this.pid = this.$route.params.pid || ''
+        getProjectInfo({pid: this.pid}).then(res=> {
+          this.title = res.data[0].title
+          this.description = res.data[0].description
+          this.site = res.data[0].site
+        })
+      }).catch(err=> {
+        console.error(err)
+        this.$Message.error('未登录')
+        this.$router.replace('/login')
       })
     }
   }
