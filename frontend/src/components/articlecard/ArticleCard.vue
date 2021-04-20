@@ -2,7 +2,8 @@
   <div
     :class="{'card':collapse,'article':!collapse}"
     @click="unfold"
-    style="margin-bottom:60px;padding-top:10px;position:relative;min-height:200px;"
+    style="margin-bottom:60px;padding-top:10px;position:relative;"
+    :style="loaded?'':{'min-height':'200px'}"
   >
     <!-- 骨架图 -->
     <div class="bone" v-if="!loaded">
@@ -177,7 +178,7 @@ export default {
   max-height: 200px;
   overflow: hidden;
 }
-.always-content img {
+.always-content >>> img {
   max-width: 100%;
 }
 .collapse {
