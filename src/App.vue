@@ -3,7 +3,7 @@
     <Layout>
       <Sider ref="side1" hide-trigger collapsible :collapsed-width="78" v-model="isCollapsed"
         class="nav">
-        <Menu active-name="1-2" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
+        <Menu class="menu" active-name="home" theme="dark" width="auto" :open-names="['1']" :class="menuitemClasses">
           <MenuItem name="collapse" @click.native="collapsedSider">
             <Icon :class="rotateIcon" type="md-menu" size="24"></Icon>
           </MenuItem>
@@ -28,7 +28,7 @@
   export default {
     data () {
       return {
-        isCollapsed: false,
+        isCollapsed: true,
         showBackTop: false,
         isLogin: false
       }
@@ -93,7 +93,6 @@
 <style scoped>
   @import url(./assets/css/base.css);
   .layout{
-    border: 1px solid #d7dde4;
     background: #f5f7f9;
     position: relative;
     border-radius: 4px;
@@ -108,6 +107,10 @@
   .nav {
     min-height: 100vh;
     position: sticky;
+  }
+  .menu {
+    position: sticky;
+    top: 0;
   }
   .menu-icon{
     transition: all .3s;

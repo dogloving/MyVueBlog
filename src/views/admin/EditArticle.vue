@@ -7,11 +7,12 @@
 
 <script>
   import {checkLogin} from "network/admin"
-  import Editor from "components/editor/Editor";
 
   export default {
     name: "EditArticle",
-    components: {Editor},
+    components: {
+      Editor: ()=> import("components/editor/Editor")
+    },
     props: {
       aid: {
         type: String,

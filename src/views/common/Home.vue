@@ -6,7 +6,6 @@
 </template>
 
 <script>
-  import ArticleCard from "components/articlecard/ArticleCard"
   import {getArticleList, getTagArticleList} from "network/user"
 
   export default {
@@ -31,7 +30,7 @@
       }
     },
     components: {
-      ArticleCard
+      ArticleCard: ()=> import("components/articlecard/ArticleCard")
     },
     mounted () {
       this.page = parseInt(this.$route.query.page) || 1

@@ -6,13 +6,12 @@
 </template>
 
 <script>
-  import ProjectCard from "components/projectcard/ProjectCard"
   import {getAllProject} from "network/user"
 
   export default {
     name: "Projects",
     components: {
-      ProjectCard
+      ProjectCard: ()=> import("components/projectcard/ProjectCard")
     },
     data () {
       return {
